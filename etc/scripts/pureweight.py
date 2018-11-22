@@ -1,12 +1,12 @@
-#export  PYTHONPATH=$PYTHONPATH:/afs/cern.ch/user/s/soffi/scratch0/TEST/CMSSW-10-0-0-pre3/src/egm_tnp_analysis
+#export  PYTHONPATH=$PYTHONPATH:/afs/cern.ch/work/m/micheli/tnp_production_2017_paper_20181116/CMSSW_10_2_5/src/egm_tnp_analysis
 import etc.inputs.tnpSampleDef as tnpSamples
 from libPython.tnpClassUtils import mkdir
 import libPython.puReweighter as pu
 
 puType = 0
                         
-for sName in tnpSamples.Data2018_102X.keys():    
-    sample = tnpSamples.Data2018_102X[sName]
+for sName in tnpSamples.Data2017_102X.keys():    
+    sample = tnpSamples.Data2017_102X[sName]
     if sample is None : continue
 #    if not 'rec' in sName : continue
 #    if not 'Winter17' in sName : continue
@@ -18,7 +18,7 @@ for sName in tnpSamples.Data2018_102X.keys():
     trees['pho'] = 'tnpPhoIDs'
 #    trees['rec'] = 'GsfElectronToSC'
     for tree in trees:
-        dirout =  '/eos/cms/store/group/phys_egamma/soffi/TnP/ntuples_20180920/2018Data_1/mc/PU/'
+        dirout =  '/eos/cms/store/group/phys_egamma/micheli/TnP/ntuples_2017_20181116/v1/mc/PU2/'
         mkdir(dirout)
         
         if   puType == 0 : sample.set_puTree( dirout + '%s_%s.pu.puTree.root'   % (sample.name,tree) )
