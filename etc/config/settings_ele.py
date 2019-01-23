@@ -17,7 +17,7 @@ flags = {
     'passingMVA94Xwp90noiso' : '(passingMVA94Xwp90noiso == 1)',
     }
 
-baseOutDir = 'results/Moriond18/tnpEleID/runBDEF/'
+baseOutDir = 'results/CmsdasPisa19/tnpEleID/2017/'
 
 #############################################################
 ########## samples definition  - preparing the samples
@@ -28,17 +28,22 @@ import etc.inputs.tnpSampleDef as tnpSamples
 tnpTreeDir = 'tnpEleIDs'
 
 samplesDef = {
-    'data'   : tnpSamples.Moriond18_94X['data_Run2017B'].clone(),
-    'mcNom'  : tnpSamples.Moriond18_94X['DY_madgraph'].clone(),
-    'mcAlt'  : tnpSamples.Moriond18_94X['DY_amcatnlo_Moriond18'].clone(),
-    'tagSel' : tnpSamples.Moriond18_94X['DY_madgraph'].clone(),
+    'data'   : tnpSamples.CMSDAS19_94X['data_2017'].clone(),
+    'mcNom'  : tnpSamples.CMSDAS19_94X['DY_madgraph'].clone(),
+    'mcAlt'  : None,
+    'tagSel' : None
+
+#    'data'   : tnpSamples.Moriond18_94X['data_Run2017B'].clone(),
+#    'mcNom'  : tnpSamples.Moriond18_94X['DY_madgraph'].clone(),
+#    'mcAlt'  : tnpSamples.Moriond18_94X['DY_amcatnlo_Moriond18'].clone(),
+#    'tagSel' : tnpSamples.Moriond18_94X['DY_madgraph'].clone(),
 }
 
 ## can add data sample easily
-samplesDef['data'].add_sample( tnpSamples.Moriond18_94X['data_Run2017C'] )
-samplesDef['data'].add_sample( tnpSamples.Moriond18_94X['data_Run2017D'] )
-samplesDef['data'].add_sample( tnpSamples.Moriond18_94X['data_Run2017E'] )
-samplesDef['data'].add_sample( tnpSamples.Moriond18_94X['data_Run2017F'] )
+#samplesDef['data'].add_sample( tnpSamples.Moriond18_94X['data_Run2017C'] )
+#samplesDef['data'].add_sample( tnpSamples.Moriond18_94X['data_Run2017D'] )
+#samplesDef['data'].add_sample( tnpSamples.Moriond18_94X['data_Run2017E'] )
+#samplesDef['data'].add_sample( tnpSamples.Moriond18_94X['data_Run2017F'] )
 
 ## some sample-based cuts... general cuts defined here after
 ## require mcTruth on MC DY samples and additional cuts
@@ -64,11 +69,12 @@ if not samplesDef['tagSel'] is None:
 #if not samplesDef['tagSel'] is None: samplesDef['tagSel'].set_weight(weightName)
 
 ## set MC weight, can use several pileup rw for different data taking periods
-weightName = 'weights_2017_runBCDEF.totWeight'
+weightName = 'weights_2017_runB.totWeight'
 if not samplesDef['mcNom' ] is None: samplesDef['mcNom' ].set_weight(weightName)
 if not samplesDef['mcAlt' ] is None: samplesDef['mcAlt' ].set_weight(weightName)
 if not samplesDef['tagSel'] is None: samplesDef['tagSel'].set_weight(weightName)
-if not samplesDef['mcNom' ] is None: samplesDef['mcNom' ].set_puTree('/eos/cms/store/group/phys_egamma/soffi/TnP/ntuples_01292018/Moriond18_V1/PU/mc-V2/DY_madgraph_ele.pu.puTree.root')
+#if not samplesDef['mcNom' ] is None: samplesDef['mcNom' ].set_puTree('/eos/cms/store/group/phys_egamma/soffi/TnP/ntuples_01292018/Moriond18_V1/PU/mc-V2/DY_madgraph_ele.pu.puTree.root')
+if not samplesDef['mcNom' ] is None: samplesDef['mcNom' ].set_puTree('/gpfs/ddn/cms/user/cmsdas/2019/EgammaExercise/TnP/mc/DY_madgraph_ele.pu.puTree.root')
 if not samplesDef['mcAlt' ] is None: samplesDef['mcAlt' ].set_puTree('/eos/cms/store/group/phys_egamma/soffi/TnP/ntuples_01292018/Moriond18_V1/PU/mc-V2/DY_amcatnlo_Moriond18_ele.pu.puTree.root')
 if not samplesDef['tagSel'] is None: samplesDef['tagSel'].set_puTree('/eos/cms/store/group/phys_egamma/soffi/TnP/ntuples_01292018/Moriond18_V1/PU/mc-V2/DY_madgraph_ele.pu.puTree.root')
 
@@ -77,10 +83,8 @@ if not samplesDef['tagSel'] is None: samplesDef['tagSel'].set_puTree('/eos/cms/s
 ########## bining definition  [can be nD bining]
 #############################################################
 biningDef = [
-   { 'var' : 'el_sc_eta' , 'type': 'float', 'bins': [-2.5,-2.0,-1.566,-1.4442, -0.8, 0.0, 0.8, 1.4442, 1.566, 2.0, 2.5] },
-   { 'var' : 'el_pt' , 'type': 'float', 'bins': [10,20,35,50,100,200,500] },
-
-
+   { 'var' : 'abs(el_sc_eta)' , 'type': 'float', 'bins': [0., 1.4442, 2.5] },
+   { 'var' : 'el_pt' , 'type': 'float', 'bins': [20,40,500] },
 ]
 
 #############################################################
@@ -91,16 +95,16 @@ cutBase   = 'tag_Ele_pt > 30 && abs(tag_sc_eta) < 2.17 && el_q*tag_Ele_q < 0'
 
 # can add addtionnal cuts for some bins (first check bin number using tnpEGM --checkBins)
 additionalCuts = { 
-    0 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
-    1 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
-    2 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
-    3 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
-    4 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
-    5 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
-    6 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
-    7 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
-    8 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
-    9 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45'
+#    0 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
+#    1 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
+#    2 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
+#    3 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
+#    4 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
+#    5 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
+#    6 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
+#    7 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
+#    8 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
+#    9 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45'
 }
 
 #### or remove any additional cut (default)

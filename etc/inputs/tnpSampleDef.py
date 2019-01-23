@@ -6,6 +6,7 @@ from libPython.tnpClassUtils import tnpSample
 #eosDirREC = 'eos/cms/store/group/phys_egamma/tnp/80X/RecoSF/RECOSFs_2016/'
 #eosWinter17 = 'eos/cms/store/group/phys_egamma/tnp/80X/PhoEleIDs/Moriond17_v1/'
 eosMoriond18 = '/eos/cms/store/group/phys_egamma/soffi/TnP/ntuples_01292018/Moriond18_V1/'
+cmsdasPisa19 = '/gpfs/ddn/cms/user/cmsdas/2019/EgammaExercise/TnP/'
 
 Moriond18_94X = {
     ### MiniAOD TnP for IDs scale factors
@@ -24,5 +25,9 @@ Moriond18_94X = {
     'data_Run2017D' : tnpSample('data_Run2017D' , eosMoriond18 + 'data/TnPTree_17Nov2017_RunD.root' , lumi = 4.36 ),
     'data_Run2017E' : tnpSample('data_Run2017E' , eosMoriond18 + 'data/TnPTree_17Nov2017_RunE.root' , lumi = 9.53 ),
     'data_Run2017F' : tnpSample('data_Run2017F' , eosMoriond18 + 'data/TnPTree_17Nov2017_RunF.root' , lumi = 13.96 ),
-
     }
+
+CMSDAS19_94X = {
+    'data_2017'     : tnpSample('data_2017'     , cmsdasPisa19 + 'data/TnPTree_2017.root' , lumi = 0.01 ),
+    'DY_madgraph'     : tnpSample('DY_madgraph'     , cmsdasPisa19 + 'mc/TnPTree_mc_1.root' ,  isMC = True, nEvts =  -1 )
+}
