@@ -94,6 +94,8 @@ def createBins( bining, cut ):
     return binDefinition
 
 def tuneCuts( bindef, cuts ) :
+#    print bindef
+    print cuts
     if cuts is None:
         return
     
@@ -101,5 +103,5 @@ def tuneCuts( bindef, cuts ) :
         cut0 = bindef['bins'][ibin]['cut']
         cut1 = cuts[ibin]
         bindef['bins'][ibin]['cut'] = '%s && %s ' % (cut0,cut1)
-    
+#        print  bindef['bins'][ibin]['cut']
 

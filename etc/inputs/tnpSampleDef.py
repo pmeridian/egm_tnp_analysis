@@ -28,6 +28,7 @@ Moriond18_94X = {
     }
 
 CMSDAS19_94X = {
-    'data_2017'     : tnpSample('data_2017'     , cmsdasPisa19 + 'data/TnPTree_2017.root' , lumi = 0.01 ),
-    'DY_madgraph'     : tnpSample('DY_madgraph'     , cmsdasPisa19 + 'mc/TnPTree_mc_1.root' ,  isMC = True, nEvts =  -1 )
+    'data_2017'     : tnpSample('data_2017'     , cmsdasPisa19 + 'data/TnPTree_data.root' , lumi = 0.1 ),
+    'DY_madgraph'     : tnpSample('DY_madgraph'     , cmsdasPisa19 + 'mc/TnPTree_mc_1.root' ,  isMC = True, nEvts =  -1 ),
+    'DY_amcatnlo'     : tnpSample('DY_madgraph'     , cmsdasPisa19 + 'mc/TnPTree_mc.root' ,  isMC = True, nEvts =  -1 )
 }
